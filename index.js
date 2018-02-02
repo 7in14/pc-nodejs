@@ -1,5 +1,7 @@
+const Chalk = require('chalk')
+
 function hello() {
-    console.log(`Hello node!\nVersion: ${process.version}`)
+    console.log(Chalk.blue(`Hello node!\nVersion: ${process.version}`))
 }
 
 hello()
