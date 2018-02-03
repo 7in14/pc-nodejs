@@ -3,12 +3,19 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "nodemon index.js",
+    "test": "lab -c -C -v --threshold 95 --assert code",
+    "test-cover": "lab -c --assert code -r html -o ./test/artifacts/coverage.html"
   },
   "repository": "https://github.com/Stropek/7in14-nodejs.git",
   "author": "przemo <curzytekp@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "chalk": "^2.3.0"
+    "hapi": "16"
+  },
+  "devDependencies": {
+    "code": "^5.1.2",
+    "lab": "^15.2.1",
+    "nodemon": "^1.14.12"
   }
 }
