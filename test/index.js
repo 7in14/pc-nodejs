@@ -27,4 +27,18 @@ lab.experiment('Index', () => {
         expect(response.statusCode).to.equal(200)
         expect(response.result).to.equal("ping-pong")
     })
+    lab.test('file should return README.md content as JSON', async() => {
+        // given
+        const fileRequest = {
+            method: 'GET', 
+            url: '/file'
+        }
+        
+        // when
+        const response = await server.inject(fileRequest)
+
+        // then
+        expect(response.statusCode).to.equal(200)
+        expect(response.result).to.contain("data")
+    })
 })
