@@ -1,6 +1,7 @@
 'use strict'
 
 const Hapi = require('hapi')
+const fs = require('fs') 
 const Pinger = require('./utils/pinger')
 
 const setupServer = () => {
@@ -26,8 +27,34 @@ const setupServer = () => {
     server.route({
         method: 'GET',
         path: '/file',
-        handler: function (request, reply) {
-            reply('file')
+        handler: async function (request, reply) {
+            let file = fs.readFileSync('./README.md').toString()
+            let json = {
+                data: file
+            }
+
+            reply(json)
+        },
+        config: {
+            description: 'Returns README.MD as JSON'
+        }
+    })
+
+    server.route({
+        method: 'GET',
+        path: '/fileAsync',
+        handler: async function (request, reply) {
+            await fs.readFile('./README.md', (err, data) => {  
+                if (err) {
+                    throw err;
+                }
+
+                let json = {
+                    text: data.toString()
+                }
+
+                reply(json)
+            });
         },
         config: {
             description: 'Returns README.MD as JSON'
