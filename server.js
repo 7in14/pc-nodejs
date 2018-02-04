@@ -7,7 +7,7 @@ const setupServer = () => {
     const server = new Hapi.Server()
 
     server.connection({
-        port: 6000,
+        port: 5000,
         host: 'localhost'
     })
 
@@ -17,6 +17,20 @@ const setupServer = () => {
         handler: function (request, reply) {
             const pong = Pinger.sayPong()
             reply(`ping-${pong}`)
+        },
+        config: {
+            description: 'Simple ping'
+        }
+    })
+
+    server.route({
+        method: 'GET',
+        path: '/file',
+        handler: function (request, reply) {
+            reply('file')
+        },
+        config: {
+            description: 'Returns README.MD as JSON'
         }
     })
 

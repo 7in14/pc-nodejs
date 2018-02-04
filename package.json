@@ -11,7 +11,11 @@
   "author": "przemo <curzytekp@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "hapi": "16"
+    "hapi": "16",
+    "inert": "4.2.1",
+    "joi": "^13.1.2",
+    "lout": "^10.0.3",
+    "vision": "4.1.1"
   },
   "devDependencies": {
     "code": "^5.1.2",
