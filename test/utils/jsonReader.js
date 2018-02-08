@@ -7,9 +7,9 @@ const Reader = require('../../utils/jsonReader')
 const lab = exports.lab = Lab.script()
 
 lab.experiment('Reader tests', () => {
-    lab.test('should read a file', () => {
+    lab.test('should read a file', async () => {
         // when
-        const result = Reader.read("./testData/sampleFile.txt")
+        const result = await Reader.read("./testData/sampleFile.txt")
 
         // then
         expect(result).to.not.be.empty()

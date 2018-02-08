@@ -1,14 +1,13 @@
 'use strict'
 
-const fs = require('fs') 
+const fs = require('await-fs') 
 
 const jsonReader = {
-    read(path) {
-        let file = fs.readFileSync(path).toString()
-        let json = {
-            data: file
+    async read(path) {
+        const content = await fs.readFile(path)
+        const json = {
+            data: content.toString()
         }
-
         return json
     }
 };

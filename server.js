@@ -1,13 +1,12 @@
 'use strict'
-
+  
 const Hapi = require('hapi')
-const Pinger = require('./utils/pinger')
-const JsonReader = require('./utils/jsonReader')
+
+const PingController = require('./controllers/ping')
+const ReadmeController = require('./controllers/readme')
 
 const setupServer = () => {
-    const server = new Hapi.Server()
-
-    server.connection({
+    const server = new Hapi.Server({
         port: 5000,
         host: 'localhost'
     })
@@ -15,25 +14,13 @@ const setupServer = () => {
     server.route({
         method: 'GET',
         path: '/ping',
-        handler: function (request, reply) {
-            const pong = Pinger.sayPong()
-            reply(`ping-${pong}`)
-        },
-        config: {
-            description: 'Simple ping'
-        }
+        options: PingController.pong
     })
 
     server.route({
         method: 'GET',
         path: '/file',
-        handler: async function (request, reply) {
-            const json = JsonReader.read('./README.md')
-            reply(json)
-        },
-        config: {
-            description: 'Returns README.MD as JSON'
-        }
+        options: ReadmeController.get
     })
 
     return server

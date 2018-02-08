@@ -1,7 +1,7 @@
 'use strict'
 
 const Lab = require('lab')
-const SetupServer = require('../server')
+const Init = require('../server')
 const { expect } = require('code')
 
 const lab = exports.lab = Lab.script()
@@ -9,10 +9,10 @@ const lab = exports.lab = Lab.script()
 let server
 
 lab.before(() => {
-    server = SetupServer()
+    server = Init()
 })
 
-lab.experiment('Index', () => {
+lab.experiment('Endpoints', () => {
     lab.test('ping should return "ping-pong"', async () => {
         // given
         const pingRequest = {
@@ -25,7 +25,7 @@ lab.experiment('Index', () => {
 
         // then
         expect(response.statusCode).to.equal(200)
-        expect(response.result).to.equal("ping-pong")
+        expect(response.result).to.equal("pong")
     })
     lab.test('file should return README.md content as JSON', async() => {
         // given
