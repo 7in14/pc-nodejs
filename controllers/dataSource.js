@@ -4,9 +4,7 @@ const DataSource = require('../models/dataSource')
 
 // PUT - create a new data source
 exports.create = { 
-    async handler(request, h) {
-        console.info(request.payload)
-        
+    async handler(request, h) {        
         const dataSource = {
             name: request.payload.name,
             url: request.payload.url

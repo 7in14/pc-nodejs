@@ -17,6 +17,7 @@
     "joi": "^13.1.2",
     "lout": "^10.0.3",
     "mongoose": "^5.0.3",
+    "sinon": "^4.2.2",
     "vision": "^5.3.1"
   },
   "devDependencies": {
