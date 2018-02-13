@@ -1,16 +1,10 @@
 'use strict'
-  
-const Hapi = require('hapi')
 
 const PingController = require('./controllers/ping')
 const ReadmeController = require('./controllers/readme')
 const DataSourceController = require('./controllers/dataSource')
 
-const setupServer = () => {
-    const server = new Hapi.Server({
-        port: 5000,
-        host: 'localhost'
-    })
+const register = (server) => {
 
     server.route({
         method: 'GET',
@@ -29,8 +23,6 @@ const setupServer = () => {
         path: '/dataSource',
         options: DataSourceController.create
     })
-
-    return server
 }
 
-module.exports = setupServer
+module.exports = register

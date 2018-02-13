@@ -1,24 +1,15 @@
 'use strict'
 
-const DataSource = require('../models/dataSource') 
+const DataSource = require('../repositories/dataSource') 
 
 // PUT - create a new data source
 exports.create = { 
     async handler(request, h) {        
-        const dataSource = {
+        const payload = {
             name: request.payload.name,
             url: request.payload.url
         }
 
-        try {
-            const newDataSource = await DataSource.create(dataSource)
-            return { 
-                message: "New data source created", 
-                dataSource: newDataSource 
-            }
-        }
-        catch (err) {
-            return { error: err }
-        }
+        return await DataSource.create(payload)
     }
 }

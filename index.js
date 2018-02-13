@@ -1,16 +1,23 @@
 'use strict'
 
+const Hapi = require('hapi')
 const Mongoose = require('mongoose');
 
 const Config = require('./config')
-const SetupServer = require('./server')
-const Server = SetupServer()
+const RegisterRoutes = require('./routes')
 
 const init = async () => {
     console.log(`Starting server...`);
 
+    const server = new Hapi.Server({
+        port: 5000,
+        host: 'localhost'
+    })
+
+    RegisterRoutes(server)
+
     try {
-        await Server.start()
+        await server.start()
 
         console.log(Config.CosmosDBUrl)
         console.log(`Connecting to Cosmos DB...`);
@@ -21,8 +28,8 @@ const init = async () => {
             }
         })
 
-        console.log(`Server running on ${Server.info.uri}`)
-        return Server
+        console.log(`Server running on ${server.info.uri}`)
+        return server
     }
     catch (err) {
         console.error(err)
