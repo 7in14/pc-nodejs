@@ -5,7 +5,7 @@ const Lab = require('lab')
 const Sinon = require('sinon')
 const { expect } = require('code')
 
-const Config = require('../../config')
+const Config = require('../config')
 const DataSource = require('../../repositories/dataSource')
 
 const lab = exports.lab = Lab.script()
