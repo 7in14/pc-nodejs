@@ -6,9 +6,20 @@ const Sinon = require('sinon')
 const { expect } = require('code')
 
 const Config = require('../config')
-const DataSource = require('../../repositories/dataSource')
+const Repository = require('../../repositories/dataSource')
 
 const lab = exports.lab = Lab.script()
+
+let createDataSources = async (n) => {
+    for (var i = 0; i < n; i++) {
+        const dataSource = {
+            name: `name_${i}`,
+            url: 'url'
+        }
+
+        await Repository.create(dataSource)
+    }
+}
 
 lab.before(() => {
     Mongoose.connect(Config.TestDBUrl)
@@ -26,6 +37,9 @@ lab.after(() => {
     })
 })
 
+lab.afterEach(() => {
+    Mongoose.connection.db.collection('dataSources').deleteMany({})
+})
 
 lab.experiment('Data Source repository', () => {
     lab.test('create - valid payload - should create data source', async () => {
@@ -36,7 +50,7 @@ lab.experiment('Data Source repository', () => {
         }
 
         // when
-        const result = await DataSource.create(dataSource)
+        const result = await Repository.create(dataSource)
 
         // then
         expect(result.message).to.equal("New data source created")
@@ -49,9 +63,29 @@ lab.experiment('Data Source repository', () => {
         }
 
         // when
-        const result = await DataSource.create(dataSource)
+        const result = await Repository.create(dataSource)
 
         // then
         expect(result.error).to.not.be.empty()
+    })
+    lab.test('get - returns first page of data sources', async () => {
+        // given 
+        await createDataSources(8)
+
+        // when 
+        const result = await Repository.get()
+
+        // then
+        expect(result.dataSources.length).to.equal(5)
+    })
+    lab.test('get - page provided - returns data sources from given page', async () => {
+        // given 
+        await createDataSources(8)
+
+        // when 
+        const result = await Repository.get(2)
+
+        // then
+        expect(result.dataSources.length).to.equal(3)
     })
 })

@@ -1,6 +1,7 @@
 'use strict'
 
 const Model = require('../models/dataSource')
+const pageSize = 5
 
 const repository = {
     async create(dataSource) {
@@ -15,6 +16,13 @@ const repository = {
         catch (err) {
             return { error: err }
         }
+    },
+    async get(page = 1) {
+        const dataSources = await Model.find({})
+                                       .skip((page - 1) * pageSize)
+                                       .limit(pageSize)
+
+        return { dataSources: dataSources }
     }
 }
 
