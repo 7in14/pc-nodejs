@@ -83,7 +83,7 @@ lab.experiment('Data Source repository', () => {
         await createDataSources(8)
 
         // when 
-        const result = await Repository.get(2)
+        const result = await Repository.get("2")
 
         // then
         expect(result.dataSources.length).to.equal(3)

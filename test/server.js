@@ -78,4 +78,18 @@ lab.experiment('Endpoints', () => {
         // then
         Sinon.assert.calledWith(DataSource.create, createRequest.payload)
     })
+    lab.test('GET should call get method on data source repository', async() => {
+        // given 
+        Sinon.stub(DataSource, 'get').resolves('ok')
+        const getRequest = {
+            method: 'GET',
+            url: '/dataSources?page=2',
+        }
+
+        // when
+        const response = await server.inject(getRequest)
+
+        // then
+        Sinon.assert.calledWith(DataSource.get, "2")
+    })
 })
