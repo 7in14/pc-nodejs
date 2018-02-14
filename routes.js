@@ -33,6 +33,11 @@ const register = (server) => {
         path: '/dataSource/{id}',
         options: DataSourceController.getById
     })
+    server.route({
+        method: 'DELETE',
+        path: '/dataSource/{id}',
+        options: DataSourceController.deleteById
+    })
 }
 
 module.exports = register

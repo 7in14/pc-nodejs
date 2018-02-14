@@ -100,4 +100,17 @@ lab.experiment('Data Source repository', () => {
         // then
         expect(result._id).to.equal(id)
     })
+    lab.test('delete - removes data source with given id', async () => {
+        // given
+        await createDataSources(5)
+        const page = await Repository.get()
+        const id = page.dataSources[2]._id
+
+        // when 
+        Repository.deleteById(id)
+        const result = await Repository.getById(id)
+
+        // then
+        expect(result).to.be.null()
+    })
 })

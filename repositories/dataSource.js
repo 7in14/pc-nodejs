@@ -28,6 +28,10 @@ const repository = {
         const dataSource = await Model.findById(id)
 
         return dataSource
+    },
+    async deleteById(id) {
+        const result = await Model.deleteOne({ _id: id })
+        return result
     }
 }
 

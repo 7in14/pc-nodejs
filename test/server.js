@@ -46,7 +46,7 @@ lab.experiment('Endpoints', () => {
         expect(response.statusCode).to.equal(200)
         expect(response.result).to.equal("pong")
     })
-    lab.test('file should return README.md content as JSON', async() => {
+    lab.test('file should return README.md content as JSON', async () => {
         // given
         const fileRequest = {
             method: 'GET', 
@@ -60,7 +60,7 @@ lab.experiment('Endpoints', () => {
         expect(response.statusCode).to.equal(200)
         expect(response.result).to.contain("data")
     })
-    lab.test('PUT should call create method on data source repository', async() => {
+    lab.test('PUT should call create method on data source repository', async () => {
         // given
         Sinon.stub(DataSource, 'create').resolves('ok')
         const createRequest = {
@@ -78,7 +78,7 @@ lab.experiment('Endpoints', () => {
         // then
         Sinon.assert.calledWith(DataSource.create, createRequest.payload)
     })
-    lab.test('GET should call get method on data source repository', async() => {
+    lab.test('GET should call get method on data source repository', async () => {
         // given 
         Sinon.stub(DataSource, 'get').resolves('ok')
         const getRequest = {
@@ -92,7 +92,7 @@ lab.experiment('Endpoints', () => {
         // then
         Sinon.assert.calledWith(DataSource.get, "2")
     })
-    lab.test('GET should call getById method on data source repository', async() => {
+    lab.test('GET should call getById method on data source repository', async () => {
         // given
         Sinon.stub(DataSource, 'getById').resolves('ok')
         const getRequest = {
@@ -105,5 +105,19 @@ lab.experiment('Endpoints', () => {
 
         // then
         Sinon.assert.calledWith(DataSource.getById, "1234")
+    })
+    lab.test('DELETE should call deleteById method on data source repository', async () => {
+        // given
+        Sinon.stub(DataSource, 'deleteById').resolves('ok')
+        const deleteRequest = {
+            method: 'DELETE',
+            url: '/dataSource/1234'
+        }
+
+        // when
+        const response = await server.inject(deleteRequest)
+
+        // then
+        Sinon.assert.calledWith(DataSource.deleteById, "1234")
     })
 })

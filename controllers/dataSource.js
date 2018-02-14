@@ -34,3 +34,20 @@ exports.getById = {
         return await DataSource.getById(id)
     }
 }
+
+// DELETE - delete data source by ID
+exports.deleteById = {
+    async handler(request, h) {
+
+        const id = request.params.id
+        const result = await DataSource.deleteById(id)
+
+        if (result.n == 1) {
+            const remaining = await DataSource.get()
+            return h.response(remaining).code(202)
+        }
+        else {
+            return h.response('Data source not found').code(404)
+        }
+    }
+}
