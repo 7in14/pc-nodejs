@@ -88,4 +88,16 @@ lab.experiment('Data Source repository', () => {
         // then
         expect(result.dataSources.length).to.equal(3)
     })
+    lab.test('getById - returns data source with given id', async () => {
+        // given
+        await createDataSources(5)
+        const page = await Repository.get()
+        const id = page.dataSources[2]._id
+
+        // when
+        const result = await Repository.getById(id)
+
+        // then
+        expect(result._id).to.equal(id)
+    })
 })

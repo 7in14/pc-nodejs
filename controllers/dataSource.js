@@ -24,3 +24,13 @@ exports.get = {
         return await DataSource.get(page)
     }
 }
+
+// GET - get data source by ID
+exports.getById = {
+    async handler(request, h) {
+
+        const id = request.params.id
+
+        return await DataSource.getById(id)
+    }
+}

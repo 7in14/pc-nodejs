@@ -28,6 +28,11 @@ const register = (server) => {
         path: '/dataSources',
         options: DataSourceController.get
     })
+    server.route({
+        method: 'GET',
+        path: '/dataSource/{id}',
+        options: DataSourceController.getById
+    })
 }
 
 module.exports = register

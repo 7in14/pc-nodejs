@@ -23,6 +23,11 @@ const repository = {
                                        .limit(pageSize)
 
         return { dataSources: dataSources }
+    },
+    async getById(id) {
+        const dataSource = await Model.findById(id)
+
+        return dataSource
     }
 }
 
