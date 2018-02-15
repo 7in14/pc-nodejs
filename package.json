@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start-local": "nodemon index.js",
+    "start": "node index.js",
     "test": "lab -c -C -v --threshold 95 --assert code",
     "test-cover": "lab -c --assert code -r html -o ./test/artifacts/coverage.html"
   },
