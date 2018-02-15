@@ -19,18 +19,20 @@ const init = async () => {
     try {
         await server.start()
 
-        console.log(Config.CosmosDBUrl)
-        console.log(`Connecting to Cosmos DB...`);
-        await Mongoose.connect(Config.CosmosDBUrl, { 
-            auth: {
-                user: Config.CosmosDBUsername,
-                password: Config.CosmosDBPassword
-            }
-        })
-
-        // console.log(Config.LocalDBUrl)
-        // console.log(`Connecting to Local Mongo DB...`);
-        // await Mongoose.connect(Config.LocalDBUrl)
+        if (process.env.CosmosDbConnectionString) {
+            console.log(process.env.CosmosDbConnectionString)
+            console.log(`Connecting to Cosmos DB...`);
+            await Mongoose.connect(process.env.CosmosDbConnectionString, { 
+                auth: {
+                    user: process.env.CosmosDbUserName,
+                    password: process.env.CosmosDbPassword
+                }
+            })
+        } else {
+            console.log(Config.LocalDBUrl)
+            console.log(`Connecting to Local Mongo DB...`);
+            await Mongoose.connect(Config.LocalDBUrl)
+        }
 
         console.log(`Server running on ${server.info.uri}`)
         return server
