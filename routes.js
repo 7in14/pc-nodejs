@@ -3,6 +3,7 @@
 const PingController = require('./controllers/ping')
 const ReadmeController = require('./controllers/readme')
 const DataSourceController = require('./controllers/dataSource')
+const RaleighCrimeController = require('./controllers/raleighCrime')
 
 const register = (server) => {
 
@@ -16,6 +17,12 @@ const register = (server) => {
         method: 'GET',
         path: '/file',
         options: ReadmeController.get
+    })
+
+    server.route({
+        method: 'GET',
+        path: '/raleigh/crime',
+        options: RaleighCrimeController.get
     })
 
     server.route({
