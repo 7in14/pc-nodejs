@@ -9,9 +9,9 @@ const RegisterRoutes = require('./routes')
 const init = async () => {
     console.log(`Starting server...`);
 
-    const server = new Hapi.Server({
-        port: 5000,
-        host: 'localhost'
+    const server = new Hapi.Server({    
+        host: process.env.HOST || 'localhost',
+        port: process.env.PORT || 8080
     })
 
     RegisterRoutes(server)
