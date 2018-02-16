@@ -26,6 +26,12 @@ const register = (server) => {
     })
 
     server.route({
+        method: 'GET',
+        path: '/allData',
+        options: DataSourceController.getAllData
+    })
+
+    server.route({
         method: 'PUT',
         path: '/dataSource',
         options: DataSourceController.create

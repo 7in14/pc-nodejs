@@ -1,20 +1,19 @@
 'use strict'
 
 const Lab = require('lab')
-const Sinon = require('sinon')
 const { expect } = require('code')
 
-const Repository = require('../../repositories/raleighCrime')
+const Service = require('../../services/raleighCrime')
 
 const lab = exports.lab = Lab.script()
 
-lab.experiment('Raleigh crime repository', () => {
+lab.experiment('Raleigh crime service', () => {
     lab.test('get - valid query - should return results from raleigh crime API', async () => {
         // given
         const query = "district=SOUTHWEST"
 
         // when
-        const result = await Repository.get(query)
+        const result = await Service.getCrimeData(query)
 
         // then
         expect(result).to.not.be.empty()

@@ -4,8 +4,9 @@ const Request = require('async-request')
 
 const baseUrl = "https://data.raleighnc.gov/resource/3bhm-we7a.json?"
 
-const repository = {
-    async get(query) {
+const service = {
+    async getCrimeData(query) {
+        
         const url = `${baseUrl}${query}`
 
         const response = await Request(url)
@@ -14,4 +15,4 @@ const repository = {
     }
 }
 
-module.exports = repository
+module.exports = service

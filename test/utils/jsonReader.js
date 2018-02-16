@@ -2,6 +2,7 @@
 
 const Lab = require('lab')
 const { expect } = require('code')
+
 const Reader = require('../../utils/jsonReader')
 
 const lab = exports.lab = Lab.script()

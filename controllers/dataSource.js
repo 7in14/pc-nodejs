@@ -1,6 +1,7 @@
 'use strict'
 
 const DataSource = require('../repositories/dataSource') 
+const AllDataService = require('../services/allData')
 
 // PUT - create a new data source
 exports.create = { 
@@ -49,5 +50,13 @@ exports.deleteById = {
         else {
             return h.response('Data source not found').code(404)
         }
+    }
+}
+
+// GET - get all data from available data sources
+exports.getAllData = {
+    async handler(request, h) {
+
+        return await AllDataService.getAllData()
     }
 }

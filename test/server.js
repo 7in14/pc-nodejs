@@ -7,11 +7,13 @@ const { expect } = require('code')
 
 const RegisterRoutes = require('../routes')
 const DataSource = require('../repositories/dataSource') 
-const CrimesSource = require('../repositories/raleighCrime')
+const CrimeService = require('../services/raleighCrime')
+const DataService = require('../services/allData')
 
 const lab = exports.lab = Lab.script()
 
 let server
+let sandbox
 
 lab.before(() => {
 
@@ -30,6 +32,14 @@ lab.before(() => {
         console.error(err)
         process.exit(1)
     }
+})
+
+lab.beforeEach(() => {
+    sandbox = Sinon.sandbox.create()
+})
+
+lab.afterEach(() => {
+    sandbox.restore()
 })
 
 lab.experiment('Endpoints', () => {
@@ -63,7 +73,7 @@ lab.experiment('Endpoints', () => {
     })
     lab.test('GET /raleigh/crime?query=<q> should return results from data.raleighnc.gov', async () => {
         // given
-        Sinon.stub(CrimesSource, 'get').resolves('ok')
+        sandbox.stub(CrimeService, 'getCrimeData').resolves('ok')
         const crimeRequest = {
             method: 'GET',
             url: '/raleigh/crime?query=test=value'
@@ -73,11 +83,25 @@ lab.experiment('Endpoints', () => {
         const response = await server.inject(crimeRequest)
 
         // then
-        Sinon.assert.calledWith(CrimesSource.get, "test=value")
+        Sinon.assert.calledWith(CrimeService.getCrimeData, "test=value")
+    })
+    lab.test('GET /allData should call getAllData method on data source repository', async () => {
+        // given
+        sandbox.stub(DataService, 'getAllData').resolves('ok')
+        const allRequest = {
+            method: 'GET',
+            url: '/allData'
+        }
+
+        // when
+        const response = await server.inject(allRequest)
+
+        // then
+        Sinon.assert.calledWith(DataService.getAllData)
     })
     lab.test('PUT /dataSource should call create method on data source repository', async () => {
         // given
-        Sinon.stub(DataSource, 'create').resolves('ok')
+        sandbox.stub(DataSource, 'create').resolves('ok')
         const createRequest = {
             method: 'PUT', 
             url: '/dataSource',
@@ -95,7 +119,7 @@ lab.experiment('Endpoints', () => {
     })
     lab.test('GET /dataSource?page={n} should call get method on data source repository', async () => {
         // given 
-        Sinon.stub(DataSource, 'get').resolves('ok')
+        sandbox.stub(DataSource, 'get').resolves('ok')
         const getRequest = {
             method: 'GET',
             url: '/dataSources?page=2',
@@ -109,7 +133,7 @@ lab.experiment('Endpoints', () => {
     })
     lab.test('GET /dataSource/{id} should call getById method on data source repository', async () => {
         // given
-        Sinon.stub(DataSource, 'getById').resolves('ok')
+        sandbox.stub(DataSource, 'getById').resolves('ok')
         const getRequest = {
             method: 'GET',
             url: '/dataSource/1234'
@@ -123,7 +147,7 @@ lab.experiment('Endpoints', () => {
     })
     lab.test('DELETE /dataSource/{id} should call deleteById method on data source repository', async () => {
         // given
-        Sinon.stub(DataSource, 'deleteById').resolves('ok')
+        sandbox.stub(DataSource, 'deleteById').resolves('ok')
         const deleteRequest = {
             method: 'DELETE',
             url: '/dataSource/1234'

@@ -10,6 +10,6 @@ const jsonReader = {
         }
         return json
     }
-};
+}
 
 module.exports = jsonReader
